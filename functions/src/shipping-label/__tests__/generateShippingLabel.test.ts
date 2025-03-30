@@ -13,7 +13,7 @@ describe('ShippingLabelGenerator', () => {
     language: 'en',
   };
 
-  it('should generate a non-empty PDF buffer', async () => {
+  it('should generate a simple PDF buffer', async () => {
     const generator = new ShippingLabelGenerator(mockLabelData);
     const pdfBuffer = await generator.generate();
 
