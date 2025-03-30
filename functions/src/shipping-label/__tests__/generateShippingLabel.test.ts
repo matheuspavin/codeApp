@@ -20,4 +20,5 @@ describe('ShippingLabelGenerator', () => {
     expect(pdfBuffer).toBeInstanceOf(Buffer);
     expect(pdfBuffer.length).toBeGreaterThan(100);
   });
+  
 });

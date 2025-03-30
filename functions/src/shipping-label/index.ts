@@ -2,16 +2,17 @@ import express from "express";
 import { ShippingLabelGenerator } from "./generateShippingLabel";
 import { LabelData } from "./types";
 /**
- * Route: get the shipping label
- * 
- * @param req Express request
- * @param res Express response
+ * Express route handler that generates a PDF shipping label.
+ *
+ * @route POST /get-label
+ * @param {express.Request} req - The HTTP request, with label data in the body.
+ * @param {express.Response} res - The HTTP response, returns a PDF file.
+ * @returns {Promise<void>} Sends a PDF buffer or error response.
  */
 export const shippingLabel = async (req: express.Request, res: express.Response) => {
   //  Your implementation
   try {
     const payload = req.body;
-    //essentaialy we gonna have languages, but fallback is always good.
     const language = payload.language || 'en';
     const labelData: LabelData = {
       orderNumber: payload.order,
