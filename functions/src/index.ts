@@ -3,6 +3,7 @@ import { shippingLabel } from "./shipping-label";
 
 // set express and port
 const app = express();
+app.use(express.json());
 const port = 3000;
 
 // set some routes

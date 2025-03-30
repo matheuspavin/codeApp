@@ -1,6 +1,6 @@
 import express from "express";
-import { createShippingLabel } from "./createShippingLabel";
-import path from "path";
+import { ShippingLabelGenerator } from "./generateShippingLabel";
+import { LabelData } from "./types";
 /**
  * Route: get the shipping label
  * 
@@ -9,18 +9,30 @@ import path from "path";
  */
 export const shippingLabel = async (req: express.Request, res: express.Response) => {
   //  Your implementation
-  const labelData = {
-    orderNumber: 'CODE-1339',
-    customerName: 'Test User',
-    company: 'CODE Internet Applications',
-    address: 'Frederik Matthesstraat 30',
-    zipCode: '2613 ZZ',
-    city: 'Delft',
-    country: 'Netherlands',
-  };
-  
-  createShippingLabel(labelData, path.join(__dirname, '../../../assets/output-label.pdf'));
+  try {
+    const payload = req.body;
+    //essentaialy we gonna have languages, but fallback is always good.
+    const language = payload.language || 'en';
+    const labelData: LabelData = {
+      orderNumber: payload.order,
+      customerName: payload.name,
+      company: payload.return_address.company,
+      address: payload.return_address.address,
+      zipCode: payload.return_address.zip_code,
+      city: payload.return_address.city,
+      country: payload.return_address.country,
+      language: language
+    };
 
+    const generator = new ShippingLabelGenerator(labelData);
+    const pdfBuffer = await generator.generate();
 
-  return res.send('Your label is returned here');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename=shipping-label.pdf');
+    res.send(pdfBuffer);
+
+  } catch (error) {
+    console.error('Error generating label:', error);
+    res.status(500).send('Failed to generate shipping label');
+  }
 }
