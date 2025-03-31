@@ -1,7 +1,7 @@
 # codeApp
 
 
-This project is a coding assessment to create a simple shipping label PDF based on user input. The label is generated dynamically and returned via an Express.js HTTPS endpoint.
+This project is to create a simple shipping label PDF based on user input. The label is generated dynamically and returned via an Express.js HTTP endpoint.
 
 
 ## Features
@@ -13,9 +13,32 @@ This project is a coding assessment to create a simple shipping label PDF based 
 - Type-safe TypeScript implementation
 - Unit tests with mocked PDF generation
 
-## Implementation Notes
 
-This challenge was well-structured and enjoyable. Here are a few notes and considerations made during the process:
+## Installation guide
+
+1. Clone the repository:
+2. cd codeApp/functions
+3. npm install
+4. npm run start
+
+The app should be available on the port 3000.
+
+To generate the label: localhost:3000/get-label
+
+The payload should be:
+{
+    "return_address": {
+        "company": "CODE ",
+        "address": "Frederik Matthesstraat 30",
+        "zip_code": "2613 ZZ",
+        "city": "Delft",
+        "country": "The Netherlands"
+    },
+    "order": "CODE-1339",
+    "name": "Test User",
+    "language": "en"
+}
+
 
 ### Known Shortcomings
 
